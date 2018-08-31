@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--
+* Created by hbm Generator<27683139@qq.com> on 2018-8-31.
+-->
+<mapper namespace="springboot.hello.dao.TbUserDao">
+    <resultMap id="tbUser" type="springboot.hello.entity.TbUser">
+            <id property="id" column="id"/>
+            <result property="username" column="username"/>
+            <result property="age" column="age"/>
+            <result property="ctm" column="ctm"/>
+    </resultMap>
+
+    <sql id="columns">
+            `id` ,`username` ,`age` ,`ctm`
+    </sql>
+
+    <insert id="insert">
+    	<selectKey keyProperty="Id" resultType="string" order="BEFORE">    
+	            select uuid() as id from dual  
+	    </selectKey> 
+        insert into `tb_user`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                `id`,
+            </if>
+            <if test="username != null">
+                `username`,
+            </if>
+            <if test="age != null">
+                `age`,
+            </if>
+            <if test="ctm != null">
+                `ctm`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+            #{id} ,
+            </if>
+            <if test="username != null">
+            #{username} ,
+            </if>
+            <if test="age != null">
+            #{age} ,
+            </if>
+            <if test="ctm != null">
+            #{ctm} ,
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="delete">
+        delete from `tb_user`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="username != null">
+                and `username` = #{username}
+            </if>
+            <if test="age != null">
+                and `age` = #{age}
+            </if>
+            <if test="ctm != null">
+                and `ctm` = #{ctm}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByIds">
+        delete from `tb_user`
+        where `id` in
+        <foreach collection="ids" open="(" item="id" separator="," close=")">
+        #{id}
+        </foreach>
+    </delete>
+
+    <update id="update">
+        update `tb_user`
+        <set>
+                <if test="username != null">
+                    `username` = #{username},
+                </if>
+                <if test="age != null">
+                    `age` = #{age},
+                </if>
+                <if test="ctm != null">
+                    `ctm` = #{ctm},
+                </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="getById" resultMap="tbUser">
+        select
+        <include refid="columns" />
+        from `tb_user`
+        where `id` = #{id}
+    </select>
+
+    <select id="list" resultMap="tbUser">
+        select
+        <include refid="columns" />
+        from `tb_user`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="username != null">
+                and `username` = #{username}
+            </if>
+            <if test="age != null">
+                and `age` = #{age}
+            </if>
+            <if test="ctm != null">
+                and `ctm` = #{ctm}
+            </if>
+        </trim>
+    </select>
+</mapper>

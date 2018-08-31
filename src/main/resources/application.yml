@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springboot?characterEncoding=UTF-8&useSSL=false
+   # url: jdbc:mysql://192.168.1.158:3306/tourismresource?characterEncoding=UTF-8
+    username: root
+    password: root
+
+
+    
+mapper:
+  mappers:
+  #  - tk.mybatis.mapper.common.Mapper
+  #not-empty: false
+  #identity: MYSQL
+  
+#公共配置与profiles选择无关
+mybatis:
+  typeAliasesPackage: springboot.hello.entity
+  mapperLocations: classpath:springboot/hello/mapper/*.xml
+
+# 打印sql
+logging:
+  level:
+     springboot.hello.dao : debug
+  
+# 分页配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
