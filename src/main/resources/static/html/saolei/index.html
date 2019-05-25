@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>扫雷</title>
+	<style type="text/css">
+		body{
+			padding: 0px;
+			margin: 0px;
+		}
+
+		.panel {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+		}
+
+		.minepanel{
+			padding: 10px;
+			background-color: white;
+		}
+		
+		.mine-cover{
+			position: relative;
+			height: 35px;
+			width: 35px;
+			background: grey;
+			float: left;
+			margin: 2px;
+			color: white;
+			 z-index: auto;
+		}
+		.mine-box{
+			position: absolute;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			height: 100%;
+			 z-index: -1;
+		}
+
+		.number{
+			color: black;
+		}
+
+		.cover{
+			width: 100px;
+			height: 100px;
+			background : black;
+			position: absolute;
+			top: 0px;
+			left: 0px;
+		}
+		.bomb {
+			color: red;
+		}
+
+
+		
+	</style>
+</head>
+	<script type="text/javascript" src="myquery.js"></script>
+	<script type="text/javascript">
+		var width = 10;
+		var height = 15;
+
+		var mineArr = [];
+
+		var mineCnt = 10;
+
+		var showColor = '#d2caca';
+
+		var bombColor = '#f9af8d';
+
+		window.onload = (e)=>{
+			init();
+		}
+
+		function init(){
+			initMine();
+			// console.log(mineArr);
+
+
+			//MQ('#minepanel').css('background-color' , 'yellow');
+			// var minepanel = document.querySelectorAll('.panel');
+			// console.log(minepanel);	
+
+			var panel = MQ('#minepanel');
+			console.log(panel);
+
+
+			var html = '';
+
+			for(var i =0; i < height ;i++){
+				html += '<div class="mine">';
+				for (var j = 0; j < width; j++) {
+					var mine = mineArr[i][j];
+					if(mine == '*'){
+						html += '<div class="mine-cover" w="'+ j +'" h="'+ i +'" flag="'+ mine +'"><div class="mine-box bomb">'+ mine +'</div></div>';
+					}else{
+						mine = mine == 0 ? '' : mine;
+						html += '<div class="mine-cover" w="'+ j +'" h="'+ i +'" flag="'+ mine +'"><div class="mine-box number">'+ mine +'</div></div>';
+					}
+					
+				}
+
+				html += '</div>';
+			}
+			panel.append(html);
+			MQ(".mine-cover").click((obj)=>{//#d2caca
+				var box = MQ(obj);
+				var minebox = box.find('.mine-box').css('z-index','1');		
+				box.css('background' ,showColor);
+				if(obj.getAttribute('flag') == '*'){
+					bomb();
+				}else if(obj.getAttribute('flag') =='' ){
+					   var cover = MQ(obj)
+					 
+						// alert(cover.attr('h')  + "," + cover.attr('w'))
+						
+					 showNearBlank(cover.attr('h') , cover.attr('w'));
+				}
+				
+				
+			});
+
+		
+		}
+
+		var showNearBlank = ( h ,w)=>{
+	
+			
+		
+		}
+
+	
+
+		var bomb = ()=>{
+			MQ('.mine-cover').css('z-index','1').css('background' ,showColor).click(null);
+			return;
+			
+			
+		}
+
+		var cptNumbers = (box) =>{
+
+		}
+
+		var initMine = ()=>{
+			//initmine
+			for(var i =0; i < height ;i++){
+				 for(var j =0;j < width ;j++){
+				 	
+				 	 if( mineArr[i] == undefined){
+				 	 	mineArr[i] = [];
+				 	 }
+					mineArr[i].push(0)
+					
+				 }
+			}
+			while(mineCnt > 0){
+				var w = rand(width );
+				var h = rand(height );
+				if(mineArr[h][w] == '*'){
+					continue;
+				}
+				mineArr[h][w] = '*';
+				//add numbers besides
+				addNumner(h,w); 
+
+				mineCnt--;
+			}
+			  // console.log(mineArr)
+		}
+
+		var addNumner = (h,w) =>{
+			// l
+			if( (w - 1) >= 0){
+				//l
+				if(mineArr[h][w-1] != '*'){
+					mineArr[h][w-1]++
+				}
+			}
+			//lu
+			if((w - 1 >=0)  && (h - 1 >=0)){
+				if(mineArr[h-1][w-1] != '*'){
+					mineArr[h-1][w-1]++
+				}
+			}
+
+			//u
+			if(h - 1 >=0 ){
+				if(mineArr[h-1][w] != '*'){
+					mineArr[h-1][w]++
+				}
+			}
+
+
+			//ru
+			if((w + 1 <width )  && (h - 1 >=0)){
+				if(mineArr[h-1][w+1] != '*'){
+					mineArr[h-1][w+1]++
+				}
+			}
+
+			//r
+			if(w + 1 <width){
+				if(mineArr[h][w+1] != '*'){
+					mineArr[h][w+1]++
+				}
+			}
+
+			//rd
+			if((w + 1 <width ) && (h + 1 <height)){
+				if(mineArr[h+1][w+1] != '*'){
+					mineArr[h+1][w+1]++
+				}
+			}
+			//d
+			if( h + 1 <height){
+				if(mineArr[h+1][w] != '*'){
+					mineArr[h+1][w]++
+				}
+			}
+			//ld
+			if((w - 1 >=0) && (h + 1 <height)){
+				if(mineArr[h+1][w-1] != '*'){
+					mineArr[h+1][w-1]++
+				}
+			}
+			
+
+		}
+
+	</script>
+
+
+
+
+
+
+
+
+<body style="height:300px;background-color: red">
+	
+	<div class="panel title">
+	
+		扫雷
+	</div>
+		
+	<div class="panel">
+	
+		<div  class="minepanel" id="minepanel">
+
+			
+
+		</div>
+	</div>
+
+	
+
+
+</body>
+</html>
