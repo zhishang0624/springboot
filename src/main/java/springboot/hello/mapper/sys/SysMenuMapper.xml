@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--
+* Created by hbm Generator<27683139@qq.com> on 2020年10月9日.
+-->
+<mapper namespace="springboot.hello.sys.dao.SysMenuDao">
+    <resultMap id="sysmenu" type="springboot.hello.sys.entity.SysMenu">
+            <id property="id" column="ID"/>
+            <result property="menuName" column="MENU_NAME"/>
+            <result property="menuCode" column="MENU_CODE"/>
+            <result property="accUrl" column="ACC_URL"/>
+            <result property="upId" column="UP_ID"/>
+            <result property="createTime" column="CREATE_TIME"/>
+            <result property="createId" column="CREATE_ID"/>
+            <result property="lastUpdateTime" column="LAST_UPDATE_TIME"/>
+            <result property="updateId" column="UPDATE_ID"/>
+    </resultMap>
+
+    <sql id="columns">
+            `ID` ,`MENU_NAME` ,`MENU_CODE` ,`ACC_URL` ,`UP_ID` ,`CREATE_TIME` ,`CREATE_ID` ,`LAST_UPDATE_TIME` ,`UPDATE_ID`
+    </sql>
+
+    <insert id="insert">
+    	<selectKey keyProperty="id" resultType="string" order="BEFORE">    
+	            select uuid() as id from dual  
+	    </selectKey> 
+        insert into `SYS_MENU`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                `ID`,
+            </if>
+            <if test="menuName != null">
+                `MENU_NAME`,
+            </if>
+            <if test="menuCode != null">
+                `MENU_CODE`,
+            </if>
+            <if test="accUrl != null">
+                `ACC_URL`,
+            </if>
+            <if test="upId != null">
+                `UP_ID`,
+            </if>
+            <if test="createTime != null">
+                `CREATE_TIME`,
+            </if>
+            <if test="createId != null">
+                `CREATE_ID`,
+            </if>
+            <if test="lastUpdateTime != null">
+                `LAST_UPDATE_TIME`,
+            </if>
+            <if test="updateId != null">
+                `UPDATE_ID`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+            #{id} ,
+            </if>
+            <if test="menuName != null">
+            #{menuName} ,
+            </if>
+            <if test="menuCode != null">
+            #{menuCode} ,
+            </if>
+            <if test="accUrl != null">
+            #{accUrl} ,
+            </if>
+            <if test="upId != null">
+            #{upId} ,
+            </if>
+            <if test="createTime != null">
+            #{createTime} ,
+            </if>
+            <if test="createId != null">
+            #{createId} ,
+            </if>
+            <if test="lastUpdateTime != null">
+            #{lastUpdateTime} ,
+            </if>
+            <if test="updateId != null">
+            #{updateId} ,
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="delete">
+        delete from `SYS_MENU`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `ID` = #{id}
+            </if>
+            <if test="menuName != null">
+                and `MENU_NAME` = #{menuName}
+            </if>
+            <if test="menuCode != null">
+                and `MENU_CODE` = #{menuCode}
+            </if>
+            <if test="accUrl != null">
+                and `ACC_URL` = #{accUrl}
+            </if>
+            <if test="upId != null">
+                and `UP_ID` = #{upId}
+            </if>
+            <if test="createTime != null">
+                and `CREATE_TIME` = #{createTime}
+            </if>
+            <if test="createId != null">
+                and `CREATE_ID` = #{createId}
+            </if>
+            <if test="lastUpdateTime != null">
+                and `LAST_UPDATE_TIME` = #{lastUpdateTime}
+            </if>
+            <if test="updateId != null">
+                and `UPDATE_ID` = #{updateId}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByIds">
+        delete from `SYS_MENU`
+        where `id` in
+        <foreach collection="ids" open="(" item="id" separator="," close=")">
+        #{id}
+        </foreach>
+    </delete>
+
+    <update id="update">
+        update `SYS_MENU`
+        <set>
+                <if test="menuName != null">
+                    `MENU_NAME` = #{menuName},
+                </if>
+                <if test="menuCode != null">
+                    `MENU_CODE` = #{menuCode},
+                </if>
+                <if test="accUrl != null">
+                    `ACC_URL` = #{accUrl},
+                </if>
+                <if test="upId != null">
+                    `UP_ID` = #{upId},
+                </if>
+                <if test="createTime != null">
+                    `CREATE_TIME` = #{createTime},
+                </if>
+                <if test="createId != null">
+                    `CREATE_ID` = #{createId},
+                </if>
+                <if test="lastUpdateTime != null">
+                    `LAST_UPDATE_TIME` = #{lastUpdateTime},
+                </if>
+                <if test="updateId != null">
+                    `UPDATE_ID` = #{updateId},
+                </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="getById" resultMap="sysmenu">
+        select
+        <include refid="columns" />
+        from `SYS_MENU`
+        where `id` = #{id}
+    </select>
+
+    <select id="list" resultMap="sysmenu">
+        select
+        <include refid="columns" />
+        from `SYS_MENU`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `ID` = #{id}
+            </if>
+            <if test="menuName != null">
+                and `MENU_NAME` = #{menuName}
+            </if>
+            <if test="menuCode != null">
+                and `MENU_CODE` = #{menuCode}
+            </if>
+            <if test="accUrl != null">
+                and `ACC_URL` = #{accUrl}
+            </if>
+            <if test="upId != null">
+                and `UP_ID` = #{upId}
+            </if>
+            <if test="createTime != null">
+                and `CREATE_TIME` = #{createTime}
+            </if>
+            <if test="createId != null">
+                and `CREATE_ID` = #{createId}
+            </if>
+            <if test="lastUpdateTime != null">
+                and `LAST_UPDATE_TIME` = #{lastUpdateTime}
+            </if>
+            <if test="updateId != null">
+                and `UPDATE_ID` = #{updateId}
+            </if>
+        </trim>
+    </select>
+</mapper>

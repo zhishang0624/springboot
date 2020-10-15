@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query queryId="sysMenuQuery">
+	<sql>
+		<![CDATA[
+		SELECT  
+		      ID as id,
+		      MENU_NAME as menuName,
+		      MENU_CODE as menuCode,
+		      ACC_URL as accUrl,
+		      UP_ID as upId,
+		      CREATE_TIME as createTime,
+		      CREATE_ID as createId,
+		      LAST_UPDATE_TIME as lastUpdateTime,
+		      UPDATE_ID as updateId		
+		FROM SYS_MENU
+		WHERE 1=1
+		 [@menuName; AND MENU_NAME = '{#menuName}' ]
+		 [@menuCode; AND MENU_CODE = '{#menuCode}' ]
+		]]>
+		
+	</sql>
+	
+	<table>
+		<head>
+				<td type="checkbox" fixed="left"  totalRowText='合计' />
+		     	<td field="id" column="ID" title="主键" hide="true"></td>
+		     	<td field="menuName" column="MENU_NAME" title="菜单名" ></td>
+		     	<td field="menuCode" column="MENU_CODE" title="菜单编码" ></td>
+		     	<td field="accUrl" column="ACC_URL" title="访问路径" ></td>
+		     	<td field="upId" column="UP_ID" title="上级ID" ></td>
+		     	<td field="createTime" column="CREATE_TIME" title="创建时间" hide="true"></td>
+		     	<td field="createId" column="CREATE_ID" title="创建人" hide="true"></td>
+		     	<td field="lastUpdateTime" column="LAST_UPDATE_TIME" title="最后修改时间" hide="true"></td>
+		     	<td field="updateId" column="UPDATE_ID" title="修改人" hide="true"></td>
+		    	<td  title="操作" templet="#editpane" ></td>
+		</head>
+	</table>
+	
+	
+</query>

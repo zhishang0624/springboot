@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+
+<head>
+<meta charset="UTF-8">
+<title>用户列表</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+<link rel="stylesheet" href="./css/font.css">
+<link rel="stylesheet" href="./css/xadmin.css">
+<script src="./js/axios.min.js" charset="utf-8"></script>
+<script src="./js/jquery.min.js" charset="utf-8"></script>
+<script src="./lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="./js/tools.js"></script>
+</head>
+<body>
+	
+	<div class="layui-fluid">
+		<!-- 表格显示面板  👇-->
+		<div class="layui-row layui-col-space15" id="dataPane">
+			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="layui-card-body ">
+						<form class="layui-form layui-col-space5">
+							<div class="layui-input-inline layui-show-xs-block">
+								<input type="text" name="username" placeholder="用户名"
+									autocomplete="off" class="layui-input">
+							</div>
+							<div class="layui-input-inline layui-show-xs-block">
+								<select name="contrller">
+									<option>用户状态</option>
+									<option>支付宝</option>
+									<option>微信</option>
+									<option>货到付款</option>
+								</select>
+							</div>
+							<div class="layui-input-inline lafite_search layui-show-xs-block">
+								<button class="layui-btn" lay-submit="" lay-filter="sreach">
+									查询</button>
+							</div>
+						</form>
+					</div>
+
+					<!--  <div class="layui-card-header">
+                            <a class="layui-btn lafite_main_color" onclick="xadmin.open('新增用户','./adduser.html',600,500)"><i class="layui-icon"></i>新增用户</a>
+                        </div> -->
+
+					<div class="layui-card-body">
+
+						<table class="layui-hide" id="test" lay-filter="test"></table>
+						<script type="text/html" id="toolbarDemo">
+                                <div class="layui-btn-container">
+                                     <button class="layui-btn lafite_main_color " lay-event="add"><i class="layui-icon"></i>新增用户</button>
+                                     <button class="layui-btn lafite_main_color" lay-event="getCheckLength">获取选中数目</button>
+                                     <button class="layui-btn lafite_main_color" lay-event="isAll">验证是否全选</button>  
+                                  </div>
+	                    </script>
+
+					</div>
+					<div id="lafite_pages"></div>
+				</div>
+			</div>
+		</div>
+		<!-- 表格显示面板  👆-->
+		<!-- 编辑面板  👆-->
+		<div class="layui-row layui-col-space10"  id="editPane" style="display: none">
+			<form class="layui-form">
+				<div class="layui-form-item">
+					<label for="L_email" class="layui-form-label"> <span
+						class="x-red">*</span> 用户名
+					</label>
+					<div class="layui-input-block lafite_width_60">
+						<input type="text" id="email" name="email" 
+							lay-verify="required" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label for="L_username" class="layui-form-label"> <span
+						class="x-red">*</span> 手机号码
+					</label>
+					<div class="layui-input-block lafite_width_60">
+						<input type="text" id="L_username" name="username"  
+							 lay-verify="required" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label for="L_pass" class="layui-form-label"> <span
+						class="x-red">*</span> 密码
+					</label>
+					<div class="layui-input-block lafite_width_60">
+						<input type="password" id="L_pass" name="pass" required lay-verify="required" placeholder="请输入密码" 
+						
+						autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label for="L_repass" class="layui-form-label"> <span
+						class="x-red">*</span> 确认密码
+					</label>
+					<div class="layui-input-block lafite_width_60">
+						<input type="password" id="L_repass" name="repass" 
+							lay-verify="required" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<label for="L_repass" class="layui-form-label"> <span
+						class="x-red">*</span> 角色
+					</label>
+					<div class="layui-input-block lafite_width_60">
+						<select name="city" lay-verify="required">
+							<option value=""></option>
+							<option value="0" >管理员</option>
+							<option value="1">上海</option>
+							<option value="2">广州</option>
+							<option value="3">深圳</option>
+							<option value="4">杭州</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<label for="L_repass" class="layui-form-label"> 备注 </label>
+					<div class="layui-input-block lafite_width_60">
+						<textarea name="desc" placeholder="请输入内容"  lay-verify="required"
+							class="layui-textarea lafite_textarea lafite_min_height_80px"></textarea>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<div class="lafite-layui-btn lafite_float_left lafite_height_35px"
+							onclick="back()">取消</div>
+						<button lay-submit lay-filter="subform"
+							class="lafite-layui-btn2 lafite_margin_left_10 lafite_height_35px">保存</button>
+					</div>
+				</div>
+
+				<!-- <div class="layui-form-item">
+                        <label for="L_repass" class="layui-form-label"></label>
+                        <button class="layui-btn" lay-filter="add" lay-submit="">增加</button></div> -->
+			</form>
+		</div>
+		<!-- 编辑面板  👆-->
+		
+		
+	</div>
+	
+
+
+
+
+</body>
+<script>layui.use(['laypage', 'laydate', 'form','table'],
+        function() {
+			var form = layui.form;
+            var laydate = layui.laydate;
+            var laypage = layui.laypage;
+			var table = layui.table;
+			
+			 table.render({
+				    elem: '#test'
+				    ,url:'data.json'
+				    ,toolbar: '#toolbarDemo'
+				    ,title: '用户数据表'
+				    ,totalRow: true
+				    ,cols: [[
+				      {type: 'checkbox', fixed: 'left'}
+				      ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'}
+				      ,{field:'username', title:'用户名', width:120, edit: 'text'}
+				      ,{field:'email', title:'邮箱', width:150, edit: 'text', templet: function(res){
+				        return '<em>'+ res.email +'</em>'
+				      }}
+				      ,{field:'experience', title:'积分', width:80, sort: true, totalRow: true}
+				      ,{field:'sex', title:'性别', width:80, edit: 'text', sort: true}
+				      ,{field:'logins', title:'登入次数', width:100, sort: true, totalRow: true}
+				      ,{field:'sign', title:'签名'}
+				      ,{field:'city', title:'城市', width:100}
+				      ,{field:'ip', title:'IP', width:120}
+				      ,{field:'joinTime', title:'加入时间', width:120}
+				    ]]
+				    ,page: true
+				  });
+				  
+				  //工具栏事件
+				  table.on('toolbar(test)', function(obj){
+				    var checkStatus = table.checkStatus(obj.config.id);
+				    switch(obj.event){
+				      case 'add':
+				    	  add();
+				      break;
+				      case 'getCheckLength':
+				        var data = checkStatus.data;
+				        layer.msg('选中了：'+ data.length + ' 个');
+				      break;
+				      case 'isAll':
+				        layer.msg(checkStatus.isAll ? '全选': '未全选')
+				      break;
+				    };
+				  });
+				  
+				//监听提交
+				  form.on('submit(subform)', function(data){
+					  console.log(data);
+				    layer.msg("😄");
+				    return false;
+				  });
+			  
+        });
+    
+  		  /*添加用户*/
+    	function add(){
+    		goedit();
+    	}
+  		  
+  		  
+    	function goedit(){
+  			$("#dataPane").fadeOut(200);
+    		$("#editPane").fadeIn(200);
+  		}  
+  		  
+  		function back(){
+  			$("#dataPane").fadeIn(200);
+    		$("#editPane").fadeOut(200);
+  		}  
+  		  
+    
+        /*用户-删除*/
+        function member_del(obj, id) {
+            layer.confirm('是否确认删除当前项目？',
+            {title:"项目删除"},
+            function(index) {
+                //发异步删除数据
+                $(obj).parents("tr").remove();
+                layer.msg('已删除!', {
+                    icon: 1,
+                    time: 1000
+                });
+            });
+        }
+
+        /*用户-撤销*/
+        function member_revoke(obj, id) {
+            layer.confirm('确认冻结吗？',
+            {title:"用户冻结"},
+            function(index) {
+                //发异步删除数据
+            });
+        }
+        
+        
+
+    </script>
+
+</html>
