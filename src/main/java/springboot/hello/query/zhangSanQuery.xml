@@ -9,7 +9,7 @@
 		[@name; AND NAME LIKE '%{#name}%' ]
 		[@age; AND AGE = {#age}   ]
 		[@salary; AND SALARY = {#salary} ]
-		
+		 
 		
 		]]>
 		
