@@ -98,6 +98,15 @@
 
 
 	<build>
+		<finalName>activiti-study</finalName>
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/java</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -105,4 +114,6 @@
 			</plugin>
 		</plugins>
 	</build>
+
+
 </project>
